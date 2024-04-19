@@ -1,10 +1,15 @@
 import { useState } from "react";
 
-function Toggle() {
+interface ToggleProps {
+    onDifficultyChange: (difficulty: string) => void;
+}
+
+const Toggle: React.FC<ToggleProps> = ({ onDifficultyChange }) => {
     const [difficulty, setDifficulty] = useState("easy");
 
     const handleDifficultyChange = (newDifficulty: string) => {
         setDifficulty(newDifficulty);
+        onDifficultyChange(newDifficulty);
     };
 
     const getLeftPosition = () => {
@@ -46,6 +51,6 @@ function Toggle() {
             ></div>
         </div>
     );
-}
+};
 
 export default Toggle;
