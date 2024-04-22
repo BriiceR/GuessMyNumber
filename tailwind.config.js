@@ -6,49 +6,29 @@ export default {
   ],
   theme: {
     extend: {
-      animation: {
-        first: "moveVertical 30s ease infinite",
-        second: "moveInCircle 20s reverse infinite",
-        third: "moveInCircle 40s linear infinite",
-        fourth: "moveHorizontal 40s ease infinite",
-        fifth: "moveInCircle 20s ease infinite",
-      },
       keyframes: {
-        moveHorizontal: {
-          "0%": {
-            transform: "translateX(-50%) translateY(-10%)",
+        'move-sphere': {
+          '0%': {
+            transform: 'translate(0%, 0%)',
           },
-          "50%": {
-            transform: "translateX(50%) translateY(10%)",
+          '25%': {
+            transform: 'translate(25vw, -25vh)',
           },
-          "100%": {
-            transform: "translateX(-50%) translateY(-10%)",
+          '50%': {
+            transform: 'translate(0%, 50vh)',
           },
-        },
-        moveInCircle: {
-          "0%": {
-            transform: "rotate(0deg)",
+          '75%': {
+            transform: 'translate(-25vw, 0%)',
           },
-          "50%": {
-            transform: "rotate(180deg)",
-          },
-          "100%": {
-            transform: "rotate(360deg)",
-          },
-        },
-        moveVertical: {
-          "0%": {
-            transform: "translateY(-50%)",
-          },
-          "50%": {
-            transform: "translateY(50%)",
-          },
-          "100%": {
-            transform: "translateY(-50%)",
+          '100%': {
+            transform: 'translate(0%, 0%)',
           },
         },
       },
+      animation: {
+        'move-sphere': 'move-sphere 20s ease-in-out infinite',
+      },
+  plugins: [],
     },
   },
-  plugins: [],
-};
+}

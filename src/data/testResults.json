@@ -1,0 +1,27 @@
+{
+    "easyResults": [
+      { "name": "DAN", "attempts": 5 },
+      { "name": "AMY", "attempts": 8 },
+      { "name": "JIM", "attempts": 10 },
+      { "name": "DAN", "attempts": 5 },
+      { "name": "AMY", "attempts": 8 },
+      { "name": "JIM", "attempts": 10 }
+    ],
+    "mediumResults": [
+      { "name": "DAN", "attempts": 15 },
+      { "name": "AMY", "attempts": 20 },
+      { "name": "JIM", "attempts": 25 },
+      { "name": "DAN", "attempts": 15 },
+      { "name": "AMY", "attempts": 20 },
+      { "name": "JIM", "attempts": 25 }
+    ],
+    "hardResults": [
+      { "name": "DAN", "attempts": 25 },
+      { "name": "AMY", "attempts": 40 },
+      { "name": "JIM", "attempts": 50 },
+      { "name": "DAN", "attempts": 25 },
+      { "name": "AMY", "attempts": 40 },
+      { "name": "JIM", "attempts": 50 }
+    ]
+  }
+  
