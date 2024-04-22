@@ -11,11 +11,9 @@ function App() {
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState("");
   const [resetGuess, setResetGuess] = useState(false);
+  const [attempts, setAttempts] = useState(0);
 
-  const [easyResults, setEasyResults] = useState<number[]>([]);
-  const [mediumResults, setMediumResults] = useState<number[]>([]);
-  const [hardResults, setHardResults] = useState<number[]>([]);
-
+  console.log(difficulty, attempts);
 
   const handleDifficultyChange = (newDifficulty: string) => {
     setDifficulty(newDifficulty);
@@ -23,20 +21,19 @@ function App() {
     setGuess("");
     setMessage("");
     setResetGuess(true);
+    setAttempts(0);
   };
 
   useEffect(() => {
     setTargetNumber(generateTargetNumber(difficulty));
   }, [resetGuess]);
 
-
-  console.log(resetGuess);
-
   useEffect(() => {
     if (resetGuess) {
       setGuess("");
       setMessage("");
       setResetGuess(false);
+      setAttempts(0);
     }
   }, [difficulty, resetGuess]);
 
@@ -53,11 +50,8 @@ function App() {
     }
   };
 
-
   const [targetNumber, setTargetNumber] = useState(generateTargetNumber(difficulty));
   const [lastMessage, setLastMessage] = useState("");
-
-  console.log(targetNumber);
 
   const handleGuess = () => {
     let message = "";
@@ -76,28 +70,15 @@ function App() {
         setTimeout(() => {
           setMessage(message);
           setLastMessage(message);
-        }, 300); // Attendez 1 seconde avant de réafficher le message
-      }, 300); // Réinitialisez le message après 1 seconde
+        }, 200);
+      }, 200);
     } else {
       setMessage(message);
       setLastMessage(message);
     }
 
     setGuess(""); // Réinitialise la valeur de guess après avoir soumis une tentative
-
-    switch (difficulty) {
-      case "easy":
-        setEasyResults([...easyResults, parseInt(guess)]);
-        break;
-      case "medium":
-        setMediumResults([...mediumResults, parseInt(guess)]);
-        break;
-      case "hard":
-        setHardResults([...hardResults, parseInt(guess)]);
-        break;
-      default:
-        break;
-    }
+    setAttempts(prevAttempts => prevAttempts + 1);
   };
 
   return (
