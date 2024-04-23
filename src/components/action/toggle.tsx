@@ -5,7 +5,7 @@ interface ToggleProps {
 }
 
 const Toggle: React.FC<ToggleProps> = ({ onDifficultyChange }) => {
-    const [difficulty, setDifficulty] = useState("easy");
+    const [difficulty, setDifficulty] = useState("easyResults");
 
     const handleDifficultyChange = (newDifficulty: string) => {
         setDifficulty(newDifficulty);
@@ -14,11 +14,11 @@ const Toggle: React.FC<ToggleProps> = ({ onDifficultyChange }) => {
 
     const getLeftPosition = () => {
         switch (difficulty) {
-            case "easy":
+            case "easyResults":
                 return "0%";
-            case "medium":
+            case "mediumResults":
                 return "33.33%";
-            case "hard":
+            case "hardResults":
                 return "66.66%";
             default:
                 return "0%";
@@ -28,19 +28,19 @@ const Toggle: React.FC<ToggleProps> = ({ onDifficultyChange }) => {
     return (
         <div className="flex justify-center relative bg-gray-200/50 rounded-full text-black border border-gray-100">
             <p
-                onClick={() => handleDifficultyChange("easy")}
+                onClick={() => handleDifficultyChange("easyResults")}
                 className={`z-10 px-4 py-1 cursor-pointer w-16 text-center`}
             >
                 100
             </p>
             <p
-                onClick={() => handleDifficultyChange("medium")}
+                onClick={() => handleDifficultyChange("mediumResults")}
                 className={`z-10 px-4 py-1 cursor-pointer w-16 text-center`}
             >
                 10K
             </p>
             <p
-                onClick={() => handleDifficultyChange("hard")}
+                onClick={() => handleDifficultyChange("hardResults")}
                 className={`z-10 px-4 py-1 cursor-pointer w-16 text-center`}
             >
                 1M

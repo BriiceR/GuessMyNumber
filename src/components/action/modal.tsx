@@ -1,11 +1,14 @@
 import { useState } from "react";
 import ConfettiAnimation from "../ui/ConfettiAnimation";
+import { addScore } from "../../services/firestoreService";
+
 
 interface CongratulationsModalProps {
     isModalOpen: boolean;
     targetNumber: number;
     attempts: number;
     closeModal: () => void;
+    difficulty: string;
 }
 
 const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
@@ -13,6 +16,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
     targetNumber,
     attempts,
     closeModal,
+    difficulty,
 }) => {
     const [name, setName] = useState("");
     const [error, setError] = useState("");
@@ -30,7 +34,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!name) {
             setError("Veuillez saisir un nom");
             return;
@@ -40,7 +44,13 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
             return;
         }
 
-        console.log(name); // Vous pouvez faire ce que vous voulez avec le nom ici
+        try {
+            await addScore(difficulty, name, attempts);
+            console.log("Score ajouté avec succès !");
+        } catch (error) {
+            console.error("Erreur lors de l'ajout du score :", error);
+        }
+
         closeModal();
     };
 

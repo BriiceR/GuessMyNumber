@@ -13,6 +13,24 @@ export const getScores = async (difficulty: string): Promise<DocumentData[]> => 
   }
 };
 
+export const addScore = async (difficulty: string, name: string, attempts: number) => {
+  const scoresCollection = collection(db, difficulty); // 'difficulty' est utilisé comme nom de collection
+  const newScore = {
+      name: name,
+      attempts: attempts,
+      createdAt: new Date()
+  };
+
+  try {
+      await addDoc(scoresCollection, newScore);
+      console.log("Score ajouté avec succès !");
+  } catch (error) {
+      console.error("Erreur lors de l'ajout du score :", error);
+      throw error;
+  }
+};
+
+
 // export const addTestData = async () => {
 //   // Ajoutez vos données de test ici
 //   const easyResults = collection(db, 'easyResults');

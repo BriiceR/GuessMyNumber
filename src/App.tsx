@@ -9,7 +9,7 @@ import { getScores } from "./services/firestoreService";
 
 
 function App() {
-  const [difficulty, setDifficulty] = useState("easy");
+  const [difficulty, setDifficulty] = useState("easyResults");
   const [guess, setGuess] = useState("");
   const [message, setMessage] = useState("");
   const [resetGuess, setResetGuess] = useState(false);
@@ -46,11 +46,11 @@ function App() {
 
   const generateTargetNumber = (difficulty: string) => {
     switch (difficulty) {
-      case "easy":
+      case "easyResults":
         return Math.floor(Math.random() * 100) + 1;
-      case "medium":
+      case "mediumResults":
         return Math.floor(Math.random() * 10000) + 1;
-      case "hard":
+      case "hardResults":
         return Math.floor(Math.random() * 1000000) + 1;
       default:
         return 0;
@@ -101,8 +101,6 @@ function App() {
     setResetGuess(true);
   };
 
-  // Dans votre composant App
-
   const [easyResults, setEasyResults] = useState<Result[]>([]);
   const [mediumResults, setMediumResults] = useState<Result[]>([]);
   const [hardResults, setHardResults] = useState<Result[]>([]);
@@ -117,14 +115,15 @@ function App() {
         setEasyResults(easyScores);
         setMediumResults(mediumScores);
         setHardResults(hardScores);
-
       } catch (error) {
         console.error("Erreur lors de la récupération des scores :", error);
       }
     };
-    fetchScores();
-  }, []);
 
+    if (!isModalOpen) {
+      fetchScores();
+    }
+  }, [isModalOpen]);
 
 
   return (
@@ -153,6 +152,7 @@ function App() {
           targetNumber={targetNumber}
           attempts={attempts}
           closeModal={closeModal}
+          difficulty={difficulty}
         />
       )}
     </div>
