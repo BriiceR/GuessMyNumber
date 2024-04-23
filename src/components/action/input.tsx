@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({ onGuessChange, onGuess, resetGuess }) => 
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     type="number"
-                    className="appearance-none peer w-full h-full bg-gray-200/50 text-black font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-200 focus:border-indigo-500"
+                    className="peer w-full h-full bg-gray-200/50 text-black font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-200 focus:border-indigo-500"
                     placeholder=""
                 />
                 {error ?

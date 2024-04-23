@@ -4,6 +4,7 @@ import Toggle from "./components/action/toggle";
 import Input from "./components/action/input";
 import Reload from "./components/action/reload";
 import Results from "./components/action/results";
+import Modal from "./components/action/modal";
 import testResults from "./data/testResults.json";
 
 function App() {
@@ -12,8 +13,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [resetGuess, setResetGuess] = useState(false);
   const [attempts, setAttempts] = useState(0);
-
-  console.log(difficulty, attempts);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDifficultyChange = (newDifficulty: string) => {
     setDifficulty(newDifficulty);
@@ -27,6 +27,12 @@ function App() {
   useEffect(() => {
     setTargetNumber(generateTargetNumber(difficulty));
   }, [resetGuess]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setTargetNumber(generateTargetNumber(difficulty));
+    }
+  }, [isModalOpen]);
 
   useEffect(() => {
     if (resetGuess) {
@@ -52,12 +58,13 @@ function App() {
 
   const [targetNumber, setTargetNumber] = useState(generateTargetNumber(difficulty));
   const [lastMessage, setLastMessage] = useState("");
-
+  console.log(targetNumber);
   const handleGuess = () => {
     let message = "";
 
     if (parseInt(guess) === targetNumber) {
       message = "Félicitations !";
+      openModal();
     } else if (parseInt(guess) < targetNumber) {
       message = "C'est plus !";
     } else {
@@ -77,8 +84,20 @@ function App() {
       setLastMessage(message);
     }
 
-    setGuess(""); // Réinitialise la valeur de guess après avoir soumis une tentative
+    setGuess("");
     setAttempts(prevAttempts => prevAttempts + 1);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setAttempts(0);
+    setGuess("");
+    setMessage("");
+    setResetGuess(true);
   };
 
   return (
@@ -94,13 +113,21 @@ function App() {
               onGuess={handleGuess}
               resetGuess={resetGuess}
             />
-
             <Reload onReset={() => setResetGuess(true)} resetGuess={resetGuess} />
             <p className="text-1xl text-center mt-4 text-black">{message}</p>
           </div>
         </div>
         <Results easyResults={testResults.easyResults} mediumResults={testResults.mediumResults} hardResults={testResults.hardResults} />
       </SphereAnimation>
+
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          targetNumber={targetNumber}
+          attempts={attempts}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 }
