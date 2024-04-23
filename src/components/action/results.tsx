@@ -1,4 +1,4 @@
-interface Result {
+export interface Result {
     name: string;
     attempts: number;
 }
@@ -17,7 +17,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Easy</h2>
                     <ul>
-                        {easyResults.sort((a, b) => a.attempts - b.attempts).map((result, index) => (
+                        {easyResults.sort((a, b) => a.attempts - b.attempts).slice(0, 5).map((result, index) => (
                             <li key={index}>
                                 {index === 0 ? '🥇 ' : index === 1 ? '🥈 ' : index === 2 ? '🥉 ' : '🍪 '}
                                 {result.name} - {result.attempts}
@@ -29,7 +29,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Medium</h2>
                     <ul>
-                        {mediumResults.sort((a, b) => a.attempts - b.attempts).map((result, index) => (
+                        {mediumResults.sort((a, b) => a.attempts - b.attempts).slice(0, 5).map((result, index) => (
                             <li key={index}>
                                 {index === 0 ? '🥇 ' : index === 1 ? '🥈 ' : index === 2 ? '🥉 ' : '🍪 '}
                                 {result.name} - {result.attempts}
@@ -41,7 +41,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Hard</h2>
                     <ul>
-                        {hardResults.sort((a, b) => a.attempts - b.attempts).map((result, index) => (
+                        {hardResults.sort((a, b) => a.attempts - b.attempts).slice(0, 5).map((result, index) => (
                             <li key={index}>
                                 {index === 0 ? '🥇 ' : index === 1 ? '🥈 ' : index === 2 ? '🥉 ' : '🍪 '}
                                 {result.name} - {result.attempts}

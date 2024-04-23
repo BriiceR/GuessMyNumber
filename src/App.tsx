@@ -3,9 +3,10 @@ import SphereAnimation from "./components/ui/background-gradient-animation";
 import Toggle from "./components/action/toggle";
 import Input from "./components/action/input";
 import Reload from "./components/action/reload";
-import Results from "./components/action/results";
+import Results, { Result } from "./components/action/results";
 import Modal from "./components/action/modal";
-import testResults from "./data/testResults.json";
+import { getScores } from "./services/firestoreService";
+
 
 function App() {
   const [difficulty, setDifficulty] = useState("easy");
@@ -100,6 +101,32 @@ function App() {
     setResetGuess(true);
   };
 
+  // Dans votre composant App
+
+  const [easyResults, setEasyResults] = useState<Result[]>([]);
+  const [mediumResults, setMediumResults] = useState<Result[]>([]);
+  const [hardResults, setHardResults] = useState<Result[]>([]);
+
+  useEffect(() => {
+    const fetchScores = async () => {
+      try {
+        const easyScores = await getScores('easy') as Result[];
+        const mediumScores = await getScores('medium') as Result[];
+        const hardScores = await getScores('hard') as Result[];
+
+        setEasyResults(easyScores);
+        setMediumResults(mediumScores);
+        setHardResults(hardScores);
+
+      } catch (error) {
+        console.error("Erreur lors de la récupération des scores :", error);
+      }
+    };
+    fetchScores();
+  }, []);
+
+
+
   return (
     <div className="">
       <SphereAnimation>
@@ -117,7 +144,7 @@ function App() {
             <p className="text-1xl text-center mt-4 text-black">{message}</p>
           </div>
         </div>
-        <Results easyResults={testResults.easyResults} mediumResults={testResults.mediumResults} hardResults={testResults.hardResults} />
+        <Results easyResults={easyResults} mediumResults={mediumResults} hardResults={hardResults} />
       </SphereAnimation>
 
       {isModalOpen && (
@@ -133,3 +160,4 @@ function App() {
 }
 
 export default App;
+
