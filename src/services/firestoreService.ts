@@ -6,12 +6,16 @@ export const getScores = async (difficulty: string): Promise<DocumentData[]> => 
     const firestore = getFirestore();
     const snapshot: QuerySnapshot<DocumentData> = await getDocs(collection(firestore, difficulty + 'Results'));
     const scores: DocumentData[] = snapshot.docs.map(doc => doc.data());
+    
+    console.log(`Fetched scores for ${difficulty}Results:`, scores);
+
     return scores;
   } catch (error) {
     console.error("Erreur lors de la récupération des scores :", error);
     throw error;
   }
 };
+
 
 export const addScore = async (difficulty: string, name: string, attempts: number) => {
   const scoresCollection = collection(db, difficulty); // 'difficulty' est utilisé comme nom de collection

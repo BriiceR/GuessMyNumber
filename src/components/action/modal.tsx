@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ConfettiAnimation from "../ui/ConfettiAnimation";
-import { addScore } from "../../services/firestoreService";
-
+import { addScore, getScores } from "../../services/firestoreService";
+import { Result } from "./results";
 
 interface CongratulationsModalProps {
     isModalOpen: boolean;
@@ -9,6 +9,12 @@ interface CongratulationsModalProps {
     attempts: number;
     closeModal: () => void;
     difficulty: string;
+    easyResults: Result[];
+    setEasyResults: React.Dispatch<React.SetStateAction<Result[]>>;
+    mediumResults: Result[];
+    setMediumResults: React.Dispatch<React.SetStateAction<Result[]>>;
+    hardResults: Result[];
+    setHardResults: React.Dispatch<React.SetStateAction<Result[]>>;
 }
 
 const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
@@ -17,13 +23,37 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
     attempts,
     closeModal,
     difficulty,
+    easyResults,
+    setEasyResults,
+    mediumResults,
+    setMediumResults,
+    hardResults,
+    setHardResults,
 }) => {
     const [name, setName] = useState("");
     const [error, setError] = useState("");
+    const [isInputEnabled, setIsInputEnabled] = useState(false);
 
-    if (!isModalOpen) {
-        return null;
-    }
+    useEffect(() => {
+        let allScores: any[] = [];
+        console.log(difficulty);
+        if (difficulty === "easyResults") {
+            allScores = easyResults;
+        } else if (difficulty === "mediumResults") {
+            allScores = mediumResults;
+        } else if (difficulty === "hardResults") {
+            allScores = hardResults;
+        }
+
+        const top5Scores = allScores.sort((a, b) => a.attempts - b.attempts).slice(0, 5);
+        const isInputEnabled = !top5Scores.some((score) => score.attempts >= attempts);
+
+        setIsInputEnabled(isInputEnabled);
+        console.log(top5Scores);
+        console.log(isInputEnabled);
+    }, [difficulty, easyResults, mediumResults, hardResults, attempts]);
+
+
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
@@ -54,6 +84,10 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         closeModal();
     };
 
+    if (!isModalOpen) {
+        return null;
+    }
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 ">
             <ConfettiAnimation isActive={isModalOpen} />
@@ -71,23 +105,36 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
                             onChange={handleNameChange}
                             className="peer w-full h-full bg-gray-200/50 text-black font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-gray-200 focus:border-indigo-500"
                             placeholder=""
+                            disabled={isInputEnabled}
                         />
-                        {error ?
+                        {error ? (
                             <label
                                 className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-black/40 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-red-500 before:border-blue-gray-200 peer-focus:before:!border-blue-500 after:border-blue-gray-200 peer-focus:after:!border-blue-500"
                             >
                                 {error}
-                            </label> :
+                            </label>
+                        ) : (
                             <label
                                 className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-black/40 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-blue-gray-400 peer-focus:text-blue-500 before:border-blue-gray-200 peer-focus:before:!border-blue-500 after:border-blue-gray-200 peer-focus:after:!border-blue-500"
                             >
                                 Nom
                             </label>
-                        }
+                        )}
 
                         <div className="flex justify-center gap-4 mt-4">
-                            <button onClick={handleSubmit} className="px-6 py-2 bg-indigo-500/80 text-white rounded-md border border-gray-100">Envoyer</button>
-                            <button onClick={closeModal} className="px-6 py-2 bg-red-500/80 text-white rounded-md border border-gray-100">Fermer</button>
+                            <button
+                                onClick={handleSubmit}
+                                className="px-6 py-2 bg-indigo-500/80 text-white rounded-md border border-gray-100"
+                                disabled={isInputEnabled}
+                            >
+                                Envoyer
+                            </button>
+                            <button
+                                onClick={closeModal}
+                                className="px-6 py-2 bg-red-500/80 text-white rounded-md border border-gray-100"
+                            >
+                                Fermer
+                            </button>
                         </div>
                     </div>
                 </div>

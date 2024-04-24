@@ -67,9 +67,9 @@ function App() {
       message = "Félicitations !";
       openModal();
     } else if (parseInt(guess) < targetNumber) {
-      message = "C'est plus !";
+      message = ` ${attempts + 1} - C'est plus ! `;
     } else {
-      message = "C'est moins !";
+      message = ` ${attempts + 1} - C'est moins ! `;
     }
 
     if (message === lastMessage) {
@@ -153,6 +153,12 @@ function App() {
           attempts={attempts}
           closeModal={closeModal}
           difficulty={difficulty}
+          easyResults={easyResults}
+          setEasyResults={setEasyResults}
+          mediumResults={mediumResults}
+          setMediumResults={setMediumResults}
+          hardResults={hardResults}
+          setHardResults={setHardResults}
         />
       )}
     </div>
