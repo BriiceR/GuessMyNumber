@@ -33,7 +33,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
 
     useEffect(() => {
         let allScores: any[] = [];
-        console.log(difficulty);
+        // console.log(difficulty);
         if (difficulty === "easyResults") {
             allScores = easyResults;
         } else if (difficulty === "mediumResults") {
@@ -46,8 +46,8 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         const isInputEnabled = !top5Scores.some((score) => score.attempts >= attempts);
 
         setIsInputEnabled(isInputEnabled);
-        console.log(top5Scores);
-        console.log(isInputEnabled);
+        // console.log(top5Scores);
+        // console.log(isInputEnabled);
     }, [difficulty, easyResults, mediumResults, hardResults, attempts]);
 
 
