@@ -44,14 +44,26 @@ function App() {
     }
   }, [difficulty, resetGuess]);
 
+  const difficultyNames = {
+    easyResults: 'Easy',
+    mediumResults: 'Medium',
+    hardResults: 'Hard',
+  };
+
+  const difficultyName = difficultyNames[difficulty as keyof typeof difficultyNames];
+
+  const easy: number = 100;
+  const medium: number = 10000;
+  const hard: number = 1000000;
+
   const generateTargetNumber = (difficulty: string) => {
     switch (difficulty) {
       case "easyResults":
-        return Math.floor(Math.random() * 100) + 1;
+        return Math.floor(Math.random() * easy) + 1;
       case "mediumResults":
-        return Math.floor(Math.random() * 10000) + 1;
+        return Math.floor(Math.random() * medium) + 1;
       case "hardResults":
-        return Math.floor(Math.random() * 1000000) + 1;
+        return Math.floor(Math.random() * hard) + 1;
       default:
         return 0;
     }
@@ -104,6 +116,7 @@ function App() {
   const [easyResults, setEasyResults] = useState<Result[]>([]);
   const [mediumResults, setMediumResults] = useState<Result[]>([]);
   const [hardResults, setHardResults] = useState<Result[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchScores = async () => {
@@ -115,6 +128,9 @@ function App() {
         setEasyResults(easyScores);
         setMediumResults(mediumScores);
         setHardResults(hardScores);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
       } catch (error) {
         console.error("Erreur lors de la récupération des scores :", error);
       }
@@ -134,6 +150,9 @@ function App() {
           <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 p-10 text-white h-72">
             <Toggle onDifficultyChange={handleDifficultyChange} />
             <p className="text-1xl font-bold text-center mt-4">Trouve mon nombre !</p>
+            <p className="text-1xl font-bold text-center mt-4 text-indigo-500">
+              {difficultyName}: 1 - {difficulty === 'easyResults' ? easy : difficulty === 'mediumResults' ? medium : hard}
+            </p>
             <Input
               onGuessChange={setGuess}
               onGuess={handleGuess}
@@ -143,7 +162,7 @@ function App() {
             <p className="text-1xl text-center mt-4 text-black">{message}</p>
           </div>
         </div>
-        <Results easyResults={easyResults} mediumResults={mediumResults} hardResults={hardResults} />
+        <Results easyResults={easyResults} mediumResults={mediumResults} hardResults={hardResults} isLoading={isLoading} />
       </SphereAnimation>
 
       {isModalOpen && (

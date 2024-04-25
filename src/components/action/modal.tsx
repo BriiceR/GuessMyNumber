@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ConfettiAnimation from "../ui/ConfettiAnimation";
-import { addScore, getScores } from "../../services/firestoreService";
+import { addScore } from "../../services/firestoreService";
 import { Result } from "./results";
 
 interface CongratulationsModalProps {
@@ -24,11 +24,8 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
     closeModal,
     difficulty,
     easyResults,
-    setEasyResults,
     mediumResults,
-    setMediumResults,
     hardResults,
-    setHardResults,
 }) => {
     const [name, setName] = useState("");
     const [error, setError] = useState("");
@@ -93,10 +90,10 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
             <ConfettiAnimation isActive={isModalOpen} />
             <div className="absolute inset-0 bg-black opacity-50 "></div>
             <div className="p-2 rounded-md z-10 sm:p-4 flex flex-col items-center justify-center bg-gray-100  bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100">
-                <h2 className="text-xl font-bold mb-4 sm:text-2xl">Félicitations !</h2>
+                <h2 className="text-xl font-bold mb-4 sm:text-2xl text-indigo-500">Félicitations ! 🎉</h2>
                 <p className="text-sm sm:text-lg">Tu as trouvé le nombre {targetNumber}</p>
                 <p className="text-sm sm:text-lg">Ton score : {attempts} tentative{attempts > 1 ? "s" : ""} !</p>
-                <h2 className="text-xl font-bold sm:text-2xl mt-4">NOM</h2>
+                {/* <h2 className="text-xl font-bold sm:text-2xl mt-4 text-white">NOM</h2> */}
                 <div className="flex justify-center items-center mt-4">
                     <div className="relative w-full min-w-[100px] ">
                         <input
