@@ -5,7 +5,7 @@ import Input from "./components/action/input";
 import Reload from "./components/action/reload";
 import Results, { Result } from "./components/action/results";
 import Modal from "./components/action/modal";
-import { getScores, addTestData } from "./services/firestoreService";
+import { getScores } from "./services/firestoreService";
 
 
 function App() {
