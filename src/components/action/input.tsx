@@ -26,6 +26,7 @@ const Input: React.FC<InputProps> = ({ onGuessChange, onGuess, resetGuess }) => 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             validateGuess();
+            setGuess("");
         }
     };
 
