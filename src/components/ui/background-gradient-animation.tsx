@@ -7,7 +7,7 @@ interface ScrollableBackgroundProps {
 const BackgroundGradientAnimation: React.FC<ScrollableBackgroundProps> = ({ children }) => {
     return (
         <div
-            className="w-screen h-full fixed top-0 left-0 overflow-y-scroll"
+            className="w-screen h-full fixed top-0 left-0 overflow-y-scroll pb-8"
             style={{
                 backgroundImage: 'linear-gradient(to right, #805ad5, #805ad5, #ff7b87)',
                 position: 'relative',
