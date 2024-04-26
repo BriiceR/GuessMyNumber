@@ -79,9 +79,9 @@ function App() {
       message = "Félicitations !";
       openModal();
     } else if (parseInt(guess) < targetNumber) {
-      message = ` ${attempts + 1} - C'est plus ! `;
+      message = `${guess} - C'est plus ! - ${attempts + 1} `;
     } else {
-      message = ` ${attempts + 1} - C'est moins ! `;
+      message = ` ${guess} - C'est moins ! - ${attempts + 1} `;
     }
 
     if (message === lastMessage) {
