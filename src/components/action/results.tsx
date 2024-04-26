@@ -18,7 +18,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
     return (
         <div className="mt-8 flex justify-center sm:flex-row ">
             <div className="flex justify-center flex-col sm:flex-row sm:gap-8 ">
-                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4">
+                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4 w-40">
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Easy</h2>
                     {isLoading ? <Loading /> :
@@ -49,7 +49,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
                             ))}
                         </ul>}
                 </div>
-                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4">
+                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4 w-40">
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Medium</h2>
                     {isLoading ? <Loading /> :
@@ -80,7 +80,7 @@ const Results: React.FC<ResultsProps> = ({ easyResults, mediumResults, hardResul
                             ))}
                         </ul>}
                 </div>
-                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4">
+                <div className="bg-gray-100 rounded-md bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-80 border border-gray-100 z-10 px-8 py-4 text-white mb-4 w-40">
                     <h2 className="text-center text-black">TOP 5 🚀</h2>
                     <h2 className="text-center text-indigo-500 font-bold">Hard</h2>
                     {isLoading ? <Loading /> :
