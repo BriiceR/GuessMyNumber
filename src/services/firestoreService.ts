@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, QuerySnapshot, DocumentData, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, QuerySnapshot, DocumentData, addDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
 export const getScores = async (difficulty: string): Promise<DocumentData[]> => {
@@ -36,17 +36,37 @@ export const addScore = async (difficulty: string, name: string, attempts: numbe
 
 
 export const addTestData = async () => {
-  // Ajoutez vos données de test ici
+
   const easyResults = collection(db, 'easyResults');
   const mediumResults = collection(db, 'mediumResults');
   const hardResults = collection(db, 'hardResults');
 
-  await addDoc(easyResults, { name: 'XXX', attempts: 99 });
-  await addDoc(easyResults, { name: 'XXX', attempts: 99 });
+  await addDoc(easyResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
+  await addDoc(easyResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
 
-  await addDoc(mediumResults, { name: 'XXX', attempts: 99 });
-  await addDoc(mediumResults, { name: 'XXX', attempts: 99 });
+  await addDoc(mediumResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
+  await addDoc(mediumResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
 
-  await addDoc(hardResults, { name: 'XXX', attempts: 99 });
-  await addDoc(hardResults, { name: 'XXX', attempts: 99 });
+  await addDoc(hardResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
+  await addDoc(hardResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
+};
+
+export const deleteAllScores = async (difficulty: string) => {
+  const scoresCollection = collection(db, difficulty);
+
+  try {
+    // Récupérer tous les documents de la collection
+    const querySnapshot = await getDocs(scoresCollection);
+
+    // Supprimer chaque document de la collection
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+      console.log(`Score supprimé avec succès: ${doc.id}`);
+    });
+
+    console.log(`Tous les scores de ${difficulty} ont été supprimés.`);
+  } catch (error) {
+    console.error(`Erreur lors de la suppression des scores de ${difficulty}:`, error);
+    throw error;
+  }
 };
