@@ -42,12 +42,9 @@ export const addTestData = async () => {
   const hardResults = collection(db, 'hardResults');
 
   await addDoc(easyResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
-  await addDoc(easyResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
 
   await addDoc(mediumResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
-  await addDoc(mediumResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
 
-  await addDoc(hardResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
   await addDoc(hardResults, { name: 'XXX', attempts: 99, createdAt: new Date() });
 };
 
